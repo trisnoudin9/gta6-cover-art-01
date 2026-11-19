@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Cover — GTA 6-style Cover Maker</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main class="app">
+  <section class="controls" aria-label="Cover editor">
+    <header>
+      <h1>VICE COVER</h1>
+      <p class="tagline">Turn your photo into GTA 6-style poster cover art. Three steps: load photos, pick a look, export the PNG.</p>
+    </header>
+
+    <section class="group" aria-label="Photos">
+      <h2>1 · Your photos</h2>
+      <p class="hint">Upload your own photos, or tap a sample. Each panel can use any of the three.</p>
+      <div class="slot">
+        <label>Photo 1 <input id="photo-0" type="file" accept="image/*"></label>
+        <div class="sample-row">
+          <button id="sample-0-boulevard" type="button">Boulevard sample</button>
+          <button id="sample-0-pier" type="button">Pier sample</button>
+        </div>
+        <p class="slotname" id="slotname-0">— empty —</p>
+      </div>
+      <div class="slot">
+        <label>Photo 2 <input id="photo-1" type="file" accept="image/*"></label>
+        <div class="sample-row">
+          <button id="sample-1-boulevard" type="button">Boulevard sample</button>
+          <button id="sample-1-pier" type="button">Pier sample</button>
+        </div>
+        <p class="slotname" id="slotname-1">— empty —</p>
+      </div>
+      <div class="slot">
+        <label>Photo 3 <input id="photo-2" type="file" accept="image/*"></label>
+        <div class="sample-row">
+          <button id="sample-2-boulevard" type="button">Boulevard sample</button>
+          <button id="sample-2-pier" type="button">Pier sample</button>
+        </div>
+        <p class="slotname" id="slotname-2">— empty —</p>
+      </div>
+    </section>
+
+    <section class="group" aria-label="Layout">
+      <h2>2 · Panel layout</h2>
+      <div class="btn-row">
+        <button data-group="layout" data-value="hero" type="button" class="active">Hero + Strip</button>
+        <button data-group="layout" data-value="triptych" type="button">Three Panels</button>
+        <button data-group="layout" data-value="grid" type="button">Four Square</button>
+        <button data-group="layout" data-value="cinema" type="button">Cinema One</button>
+      </div>
+    </section>
+
+    <section class="group" aria-label="Caption">
+      <h2>3 · Caption</h2>
+      <label>Title <input id="title" type="text" maxlength="24" value="Sunset Heist"></label>
+      <label>Subtitle <input id="subtitle" type="text" maxlength="40" value="Neon Bay Nights"></label>
+      <div class="btn-row">
+        <button data-group="letter" data-value="block" type="button" class="active">Block</button>
+        <button data-group="letter" data-value="outline" type="button">Outline</button>
+        <button data-group="letter" data-value="neon" type="button">Neon</button>
+      </div>
+    </section>
+
+    <section class="group" aria-label="Colour grade">
+      <h2>4 · Sunset grade</h2>
+      <div class="btn-row">
+        <button data-group="grade" data-value="sunset" type="button" class="active">Sunset</button>
+        <button data-group="grade" data-value="neon" type="button">Neon Night</button>
+        <button data-group="grade" data-value="miami" type="button">Miami Pink</button>
+        <button data-group="grade" data-value="golden" type="button">Golden Hour</button>
+      </div>
+      <div class="fx-row">
+        <label><input id="fx-sun" type="checkbox" checked> Retro sun</label>
+        <label><input id="fx-skyline" type="checkbox" checked> Skyline</label>
+        <label><input id="fx-palms" type="checkbox" checked> Palms</label>
+        <label><input id="fx-halftone" type="checkbox" checked> Halftone</label>
+      </div>
+    </section>
+
+    <section class="group" aria-label="Crop panel">
+      <h2>5 · Crop a panel</h2>
+      <p class="hint">Click a panel in the preview, or pick one here, then zoom and pan it.</p>
+      <div class="crop-grid">
+        <label>Panel
+          <select id="panel-select"></select>
+        </label>
+        <label>Photo in panel
+          <select id="panel-photo">
+            <option value="0">Photo 1</option>
+            <option value="1">Photo 2</option>
+            <option value="2">Photo 3</option>
+          </select>
+        </label>
+        <label>Zoom <span id="zoom-val">100%</span>
+          <input id="zoom" type="range" min="1" max="2.5" step="0.05" value="1">
+        </label>
+        <label>Pan left–right <span id="panx-val">0</span>
+          <input id="panx" type="range" min="-0.4" max="0.4" step="0.01" value="0">
+        </label>
+        <label>Pan up–down <span id="pany-val">0</span>
+          <input id="pany" type="range" min="-0.4" max="0.4" step="0.01" value="0">
+        </label>
+      </div>
+    </section>
+
+    <section class="group export" aria-label="Export">
+      <h2>6 · Export PNG</h2>
+      <div class="btn-row">
+        <button data-group="aspect" data-value="square" type="button" class="active">Square</button>
+        <button data-group="aspect" data-value="portrait" type="button">Portrait</button>
+        <button data-group="aspect" data-value="landscape" type="button">Landscape</button>
+      </div>
+      <p class="hint">Preview size follows the button above. Export writes the full-resolution PNG.</p>
+      <div class="export-row">
+        <button id="export-square" type="button" class="primary">PNG 1080 × 1080</button>
+        <button id="export-portrait" type="button" class="primary">PNG 1080 × 1350</button>
+        <button id="export-landscape" type="button" class="primary">PNG 1920 × 1080</button>
+      </div>
+      <button id="export-all" type="button" class="wide">Export all three sizes</button>
+      <p id="status" role="status"></p>
+    </section>
+    <p class="fineprint">Photos stay on your machine — nothing is uploaded. Original artwork: no Rockstar logo, artwork or font is used.</p>
+  </section>
+
+  <section class="preview" aria-label="Live preview">
+    <canvas id="cover" width="1080" height="1080" aria-label="Live cover preview"></canvas>
+    <p class="preview-hint">Live preview — click a panel to crop it.</p>
+  </section>
+</main>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
